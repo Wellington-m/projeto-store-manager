@@ -20,7 +20,6 @@ const productValidade = (req, res, next) => {
   const values = req.body;
 
   const { error } = schemaProduct.validate(values);
-  console.log(error.details[0].type);
 
   if (error) return res.status(stausCode(error)).json({ message: error.details[0].message });
 
