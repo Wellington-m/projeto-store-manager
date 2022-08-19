@@ -1,5 +1,7 @@
 const productService = require('../services/productService');
 
+const ERROR_MESSAGE = 'Server error';
+
 const getAll = async (_req, res) => { 
   const result = await productService.getAll();
   return res.status(200).json(result);
@@ -13,7 +15,19 @@ const getById = async (req, res) => {
     return res.status(200).json(result);
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: ERROR_MESSAGE });
   }
 };
 
-module.exports = { getAll, getById };
+const create = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const result = await productService.create(name);
+    return res.status(201).json({ id: result.insertId, name });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: ERROR_MESSAGE });
+  }
+};
+
+module.exports = { getAll, getById, create };
