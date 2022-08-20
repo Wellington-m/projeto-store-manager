@@ -25,8 +25,8 @@ describe('Busca todos os produtos no banco de dados', () => {
   });
   describe('Quando existe produtos cadastrados', () => {
     before(() => {
-      const executeResult = [allProductsResponse, []];
-      sinon.stub(productModel, 'getAll').resolves(executeResult);
+      const response = [allProductsResponse, []];
+      sinon.stub(productModel, 'getAll').resolves(response);
     });
     after(() => {
       productModel.getAll.restore();
