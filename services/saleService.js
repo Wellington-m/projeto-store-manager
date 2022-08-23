@@ -3,8 +3,11 @@ const salesProductsModel = require('../models/salesProductsModel');
 
 const getAll = async () => { 
   const result = await salesModel.getAll();
+  return result;
+};
 
-  // const { sale_id: saleId, date, product_id: productId, quantity } = result;
+const getById = async (id) => { 
+  const result = await salesModel.getById(id);
   return result;
 };
 
@@ -21,4 +24,4 @@ const create = async (products) => {
   return result;
 };
 
-module.exports = { create, getAll };
+module.exports = { create, getAll, getById };
