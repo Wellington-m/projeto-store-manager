@@ -1,6 +1,13 @@
 const salesModel = require('../models/salesModel');
 const salesProductsModel = require('../models/salesProductsModel');
 
+const getAll = async () => { 
+  const result = await salesModel.getAll();
+
+  // const { sale_id: saleId, date, product_id: productId, quantity } = result;
+  return result;
+};
+
 const create = async (products) => { 
   const { insertId: saleId } = await salesModel.create();
   await Promise.all(
@@ -14,4 +21,4 @@ const create = async (products) => {
   return result;
 };
 
-module.exports = { create };
+module.exports = { create, getAll };
