@@ -15,4 +15,10 @@ const create = async (name) => {
   return result;
 };
 
-module.exports = { getAll, getById, create };
+const update = async (name, id) => { 
+  const result = await productModel.update(name, id);
+  if (result.affectedRows === 0) return false;
+  return true;
+};
+
+module.exports = { getAll, getById, create, update };

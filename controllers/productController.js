@@ -35,4 +35,12 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { getAll, getById, create };
+const update = async (req, res) => { 
+  const { name } = req.body;
+  const { id } = req.params;
+  const result = await productService.update(name, id);
+  if (!result) return res.status(404).json({ message: 'Product not found' });
+  return res.status(200).json({ id, name });
+};
+
+module.exports = { getAll, getById, create, update };
