@@ -47,4 +47,25 @@ describe('Busca todos os produtos no banco de dados', () => {
       expect(response.json.args[0][0]).to.be.not.empty;
     });
   });
+  describe('Quando a aplicação quebra', () => {
+    const request = {};
+    const response = {};
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(productService, 'getAll').throws(new Error('Server error'));
+    });
+    after(() => {
+      productService.getAll.restore();
+    });
+    it('Retorna status 500', async () => {
+      await productController.getAll(request, response);
+      expect(response.status.calledWith(500)).to.be.equal(true);
+    });
+    it('Retorna a mensagem: Server error', async () => { 
+      await productController.getAll(request, response);
+      expect(response.json.args[0]).to.deep.include({ message: 'Server error' });
+    });
+  });
+
 });
