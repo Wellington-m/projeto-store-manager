@@ -4,4 +4,6 @@ const allProductsResponse = [
   { id: 3, name: 'Escudo do Capitão América' },
 ];
 
-module.exports = { allProductsResponse };
+const productById = { id: 1, name: 'Martelo de Thor' };
+
+module.exports = { allProductsResponse, productById };
