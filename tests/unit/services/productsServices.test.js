@@ -3,7 +3,7 @@ const { describe } = require('mocha');
 const sinon = require('sinon');
 const productService = require('../../../services/productService');
 const productModel = require('../../../models/productModel');
-const { allProductsResponse } = require('../dataMock');
+const { allProductsResponse, productById } = require('../dataMock');
 
 describe('Busca todos os produtos no banco de dados', () => {
   describe('Não existe nenhum produdo cadastrado', () => {
@@ -49,6 +49,37 @@ describe('Busca todos os produtos no banco de dados', () => {
       const result = await productService.getAll();
       const product = result[0][0];
       expect(product).to.have.all.keys('id', 'name');
+    });
+  });
+});
+
+describe('Buscar um produto pelo ID', () => {
+  describe('Caso exista o produto buscado', () => {
+    before(() => {
+      sinon.stub(productModel, 'getById').resolves(productById);
+    });
+    after(() => {
+      productModel.getById.restore();
+    });
+    it('Deve retornar um objeto', async () => {
+      const result = await productService.getById();
+      expect(result).to.be.an('object');
+    });
+    it('Deve conter as chaves id e name', async () => { 
+      const result = await productService.getById();
+      expect(result).to.have.keys('id', 'name');
+    });
+  });
+  describe('Caso não exisa o produto buscado', () => {
+    before(() => {
+      sinon.stub(productModel, 'getById').resolves(undefined);
+    });
+    after(() => {
+      productModel.getById.restore();
+    });
+    it('Deve retornar undefined', async () => {
+      const result = await productService.getById();
+      expect(result).to.be.equal(undefined);
     });
   });
 });
