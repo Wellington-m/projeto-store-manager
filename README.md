@@ -1,4 +1,4 @@
-# Boas-vindas ao projeto Blogs Api!
+# Boas-vindas ao projeto Store Manager!
 
 
 ## Descrição
