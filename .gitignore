@@ -84,6 +84,7 @@ fabric.properties
 # *.ipr
 
 roteiro.js
+node_modules
 
 # Sonarlint plugin
 .idea/**/sonarlint/
