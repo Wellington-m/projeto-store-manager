@@ -89,5 +89,6 @@ As rotas disponíveis são:
 * Alterar o nome de um produto pelo ID: `http://localhost:3000/products/ID`
 
 ### Delete
+ :information_source: Desenvolvendo...
 
 
