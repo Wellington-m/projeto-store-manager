@@ -60,34 +60,6 @@ Foi desenvolvido uma API utilizando a arquitetura MSC (model-service-controller)
 
 ##
 
-Após a aplicação estar rodando abra alguma ferramenta para requisições HTTP como postman, insominia, thunderCliente etc...
-Utilize a rota http://localhost:3000/login para fazer login passando as informações pelo body:
-```JSON
-{
- "email": "lewishamilton@gmail.com",
- "password": "123456"
-}
-```
-
-Será retornado um token para ser utilizado no *Header* das demais requisições.
-
-Para criar um post é esperado um objeto no body do tipo:
-```JSON
-{
- "title": "Titulo do post",
- "content": "conteúdo do post",
- "categoryIds": [4] //É esperado um ou mais id a categoria que o post pertence
-}
-```
-
-Para editar um post é esperado um objeto no body do tipo:
-```JSON
-{
-  "title": "Titulo do post",
-  "content": "conteúdo do post"
-}
-```
-
 As rotas disponíveis são:
 ### Post
 
