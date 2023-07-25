@@ -62,14 +62,16 @@ describe('Busca todos os produtos no banco de dados', () => {
       await productController.getAll(request, response);
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
-    it('Retorna a mensagem: Server error', async () => { 
+    it('Retorna a mensagem: Server error', async () => {
       await productController.getAll(request, response);
-      expect(response.json.args[0]).to.deep.include({ message: 'Server error' });
+      expect(response.json.args[0]).to.deep.include({
+        message: 'Server error',
+      });
     });
   });
 });
 
-describe('Buscar um produto pelo ID', () => { 
+describe('Buscar um produto pelo ID', () => {
   describe('Caso exista o produto buscado', () => {
     const request = { params: { id: '1' } };
     const response = {};
@@ -85,25 +87,32 @@ describe('Buscar um produto pelo ID', () => {
       await productController.getById(request, response);
       expect(response.status.calledWith(200)).to.be.equal(true);
     });
+
+    it('Deve retornar o produto', async () => {
+      await productController.getById(request, response);
+      expect(response.json.calledWith(productById)).to.be.equal(true);
+    });
   });
-  describe('Caso não exisa o produto buscado', () => { 
+  describe('Caso não exisa o produto buscado', () => {
     const request = { params: { id: '1000' } };
     const response = {};
-    before(() => { 
+    before(() => {
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
       sinon.stub(productService, 'getById').resolves();
     });
-    after(() => { 
+    after(() => {
       productService.getById.restore();
     });
     it('Deve retornar o status 404', async () => {
       await productController.getById(request, response);
       expect(response.status.calledWith(404)).to.be.equal(true);
     });
-    it('Deve retornar a mensagem: Product not found', async () => { 
+    it('Deve retornar a mensagem: Product not found', async () => {
       await productController.getById(request, response);
-      expect(response.json.args[0]).to.deep.include({ message: 'Product not found' });
+      expect(response.json.args[0]).to.deep.include({
+        message: 'Product not found',
+      });
     });
   });
   describe('Quando a aplicação quebra', () => {
@@ -123,7 +132,9 @@ describe('Buscar um produto pelo ID', () => {
     });
     it('Retorna a mensagem: Server error', async () => {
       await productController.getById(request, response);
-      expect(response.json.args[0]).to.deep.include({ message: 'Server error' });
+      expect(response.json.args[0]).to.deep.include({
+        message: 'Server error',
+      });
     });
   });
 });
