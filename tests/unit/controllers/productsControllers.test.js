@@ -192,3 +192,60 @@ describe('Cadastrar um produto', () => {
     });
   });
 });
+
+describe('Atualizar o nome de um produto', () => {
+  describe('Nome é atualizado com sucesso', () => {
+    const request = { body: { name: 'Atualizado' }, params: { id: '1' } };
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon
+        .stub(productService, 'update')
+        .resolves({ id: '1', name: 'Atualizado' });
+    });
+
+    after(() => {
+      productService.update.restore();
+    });
+
+    it('Deve retornar o status 200', async () => {
+      await productController.update(request, response);
+      expect(response.status.calledWith(200)).to.be.equal(true);
+    });
+    it('Deve retornar o id do produto e o nome', async () => {
+      await productController.update(request, response);
+      expect(response.json.args[0]).to.deep.include({
+        id: '1',
+        name: 'Atualizado',
+      });
+    });
+  });
+  describe('Caso o produto não seja encontrado', () => {
+    const request = { body: { name: 'Atualizado' }, params: { id: '10000' } };
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(productService, 'update').returns(false);
+    });
+
+    after(() => {
+      productService.update.restore();
+    });
+
+    it('Deve retornar status 404', async () => {
+      await productController.update(request, response);
+      expect(response.status.calledWith(404)).to.be.equal(true);
+    });
+    it('Deve retornar a mensagem: Product not found', async () => {
+      await productController.update(request, response);
+      expect(response.json.args[0]).to.deep.include({
+        message: 'Product not found',
+      });
+    });
+  });
+});
