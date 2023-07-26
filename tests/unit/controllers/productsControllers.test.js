@@ -138,3 +138,14 @@ describe('Buscar um produto pelo ID', () => {
     });
   });
 });
+
+describe('Cadastrar um produto', () => {
+  describe('Produto é cadastrado com sucesso', () => {
+    it('Deve retornar o status 201', () => {});
+    it('Deve retornar o id do produto e o nome', () => {});
+  });
+  describe('Caso ocorra um erro na aplicação', () => {
+    it('Deve retornar status 500', () => {});
+    it('Deve retornar a mensagem SERVER ERROR', () => {});
+  });
+});
