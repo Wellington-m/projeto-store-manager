@@ -6,4 +6,25 @@ const allProductsResponse = [
 
 const productById = { id: 1, name: 'Martelo de Thor' };
 
-module.exports = { allProductsResponse, productById };
+const allSales = [
+  {
+    saleId: 1,
+    date: '2023-07-30T21:33:51.000Z',
+    productId: 1,
+    quantity: 5,
+  },
+  {
+    saleId: 1,
+    date: '2023-07-30T21:33:51.000Z',
+    productId: 2,
+    quantity: 10,
+  },
+  {
+    saleId: 2,
+    date: '2023-07-30T21:33:51.000Z',
+    productId: 3,
+    quantity: 15,
+  },
+];
+
+module.exports = { allProductsResponse, productById, allSales };
