@@ -1,16 +1,24 @@
 const saleService = require('../services/saleService');
 
-const getAll = async (_req, res) => { 
-  const result = await saleService.getAll();
-  return res.status(200).json(result);
+const ERROR_MESSAGE = 'Server error';
+
+const getAll = async (_req, res) => {
+  try {
+    const result = await saleService.getAll();
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).json({ message: ERROR_MESSAGE });
+  }
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
 
   const result = await saleService.getById(id);
-  if (result.length === 0) return res.status(404).json({ message: 'Sale not found' });
 
+  if (result.length === 0) {
+    return res.status(404).json({ message: 'Sale not found' });
+  }
   return res.status(200).json(result);
 };
 

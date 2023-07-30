@@ -57,7 +57,30 @@ describe('Buscar todas as vendas no banco de dados', () => {
   });
 
   describe('Quando a aplicação quebra', () => {
-    it('Retorna o status 500', async () => {});
-    it('Retorna mensagem correta de erro', async () => {});
+    const request = {};
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(saleService, 'getAll').throws(new Error('Server Error'));
+    });
+
+    after(() => {
+      saleService.getAll.restore();
+    });
+
+    it('Retorna o status 500', async () => {
+      await saleController.getAll(request, response);
+      expect(response.status.calledWith(500)).to.be.equal(true);
+    });
+
+    it('Retorna mensagem correta de erro', async () => {
+      await saleController.getAll(request, response);
+      expect(response.json.calledWith({ message: 'Server error' })).to.be.equal(
+        true
+      );
+    });
   });
 });
