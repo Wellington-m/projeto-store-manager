@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const { describe } = require('mocha');
 const saleController = require('../../../controllers/saleController');
 const saleService = require('../../../services/saleService');
-const { allSales } = require('../dataMock');
+const { allSales, sale } = require('../dataMock');
 
 describe('Buscar todas as vendas no banco de dados', () => {
   describe('Nenhuma venda registrada', () => {
@@ -86,7 +86,83 @@ describe('Buscar todas as vendas no banco de dados', () => {
 });
 
 describe('Buscar uma venda pelo ID', () => {
-  describe('Não tem venda registrada', async () => {});
-  describe('Venda encontrada com sucesso', async () => {});
-  describe('A aplicação quebra', async () => {});
+  describe('Não tem venda registrada', () => {
+    const request = { params: { id: 1 } };
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(saleService, 'getById').resolves([]);
+    });
+
+    after(() => {
+      saleService.getById.restore();
+    });
+
+    it('Retorna o status 404', async () => {
+      await saleController.getById(request, response);
+      expect(response.status.calledWith(404)).to.be.equal(true);
+    });
+
+    it('Retorna a mensagem correta', async () => {
+      await saleController.getById(request, response);
+      expect(response.status.calledWith({ message: 'Sale not found' }));
+    });
+  });
+
+  describe('Venda encontrada com sucesso', () => {
+    const request = { params: { id: 1 } };
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(saleService, 'getById').resolves(sale);
+    });
+
+    after(() => {
+      saleService.getById.restore();
+    });
+
+    it('Retorna status 200', async () => {
+      await saleController.getById(request, response);
+      expect(response.status.calledWith(200)).to.be.equal(true);
+    });
+
+    it('Retona a venda corretamente', async () => {
+      await saleController.getById(request, response);
+      expect(response.json.calledWith(sale)).to.be.equal(true);
+    });
+  });
+
+  describe('Quando a aplicação quebra', () => {
+    const request = { params: { id: 1 } };
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(saleService, 'getById').throws(new Error('Server Error'));
+    });
+
+    after(() => {
+      saleService.getById.restore();
+    });
+
+    it('Deve retornar status 500', async () => {
+      await saleController.getById(request, response);
+      expect(response.status.calledWith(500)).to.be.equal(true);
+    });
+
+    it('Retorna a mensagem correta', async () => {
+      await saleController.getById(request, response);
+      expect(response.json.calledWith({ message: 'Server error' })).to.be.equal(
+        true
+      );
+    });
+  });
 });

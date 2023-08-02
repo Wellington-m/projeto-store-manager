@@ -27,4 +27,10 @@ const allSales = [
   },
 ];
 
-module.exports = { allProductsResponse, productById, allSales };
+const sale = {
+  date: '2023-07-30T21:33:51.000Z',
+  productId: 3,
+  quantity: 15,
+};
+
+module.exports = { allProductsResponse, productById, allSales, sale };
