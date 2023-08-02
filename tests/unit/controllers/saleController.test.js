@@ -84,3 +84,9 @@ describe('Buscar todas as vendas no banco de dados', () => {
     });
   });
 });
+
+describe('Buscar uma venda pelo ID', () => {
+  describe('Não tem venda registrada', async () => {});
+  describe('Venda encontrada com sucesso', async () => {});
+  describe('A aplicação quebra', async () => {});
+});
