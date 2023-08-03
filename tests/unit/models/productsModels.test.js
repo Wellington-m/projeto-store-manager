@@ -3,7 +3,7 @@ const { describe } = require('mocha');
 const sinon = require('sinon');
 const productModel = require('../../../models/productModel');
 const connection = require('../../../models/connection');
-const { allProductsResponse, productById } = require('../dataMock');
+const { allProductsResponse, productById, execute } = require('../dataMock');
 
 describe('Busca todos os produtos no banco de dados', () => {
   describe('Não existe nenhum produdo cadastrado', () => {
@@ -11,7 +11,7 @@ describe('Busca todos os produtos no banco de dados', () => {
       const executeResult = [[], []];
       sinon.stub(connection, 'execute').resolves(executeResult);
     });
-    after(() => { 
+    after(() => {
       connection.execute.restore();
     });
     it('Retorna um array', async () => {
@@ -24,6 +24,7 @@ describe('Busca todos os produtos no banco de dados', () => {
       expect(result).to.be.empty;
     });
   });
+
   describe('Quando existe produtos cadastrados', () => {
     before(() => {
       const executeResult = [allProductsResponse, []];
@@ -72,6 +73,7 @@ describe('Buscar um produto pelo ID', () => {
       expect(result).to.include.all.keys('id', 'name');
     });
   });
+
   describe('Caso não exisa o produto buscado', () => {
     before(() => {
       const executeResult = [[], []];
@@ -84,5 +86,39 @@ describe('Buscar um produto pelo ID', () => {
       const result = await productModel.getById();
       expect(result).to.be.equal(undefined);
     });
+  });
+});
+
+describe('Cadastrar uma venda', () => {
+  describe('Venda cadastrada com sucesso', () => {
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(execute);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    })
+
+    it('Retorna um objeto com o id do produto cadastrado', async () => {
+      const result = await productModel.create('teste');
+      expect(result).to.be.an('object');
+      expect(result).to.include.keys('insertId');
+    });
+  });
+});
+
+describe('Atualizar o nome de um produto', () => {
+  before(() => {
+    sinon.stub(connection, 'execute').resolves(execute);
+  });
+
+  after(() => {
+    connection.execute.restore();
+  });
+
+  it('Retorna um objeto informando que houve alteração', async () => {
+    const result = await productModel.update('teste', 7);
+    expect(result).to.be.an('object');
+    expect(result).to.have.property('affectedRows', 1);
   });
 });

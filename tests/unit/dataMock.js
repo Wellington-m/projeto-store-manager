@@ -47,10 +47,23 @@ const saleRegistered = {
   ],
 };
 
+const execute = [  
+  {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 7,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0
+  },
+  undefined
+]
+
 module.exports = {
   allProductsResponse,
   productById,
   allSales,
   sale,
   saleRegistered,
+  execute,
 };
