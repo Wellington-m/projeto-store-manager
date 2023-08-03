@@ -27,9 +27,13 @@ const getById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const products = req.body;
-  const result = await saleService.create(products);
-  return res.status(201).json(result);
+  try {
+    const products = req.body;
+    const result = await saleService.create(products);
+    return res.status(201).json(result);
+  } catch (error) {
+    return res.status(500).json({ message: ERROR_MESSAGE });
+  }
 };
 
 module.exports = { create, getAll, getById };

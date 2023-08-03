@@ -33,4 +33,24 @@ const sale = {
   quantity: 15,
 };
 
-module.exports = { allProductsResponse, productById, allSales, sale };
+const saleRegistered = {
+  id: 3,
+  itemsSold: [
+    {
+      productId: 1,
+      quantity: 1,
+    },
+    {
+      productId: 3,
+      quantity: 3,
+    },
+  ],
+};
+
+module.exports = {
+  allProductsResponse,
+  productById,
+  allSales,
+  sale,
+  saleRegistered,
+};

@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const { describe } = require('mocha');
 const saleController = require('../../../controllers/saleController');
 const saleService = require('../../../services/saleService');
-const { allSales, sale } = require('../dataMock');
+const { allSales, sale, saleRegistered } = require('../dataMock');
 
 describe('Buscar todas as vendas no banco de dados', () => {
   describe('Nenhuma venda registrada', () => {
@@ -163,6 +163,59 @@ describe('Buscar uma venda pelo ID', () => {
       expect(response.json.calledWith({ message: 'Server error' })).to.be.equal(
         true
       );
+    });
+  });
+});
+
+describe('Cadastrar uma venda', () => {
+  describe('Venda cadastrada com sucesso', () => {
+    const request = {};
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(saleService, 'create').resolves(saleRegistered);
+    });
+
+    after(() => {
+      saleService.create.restore();
+    });
+
+    it('Retorna status 201', async () => {
+      await saleController.create(request, response);
+      expect(response.status.calledWith(201)).to.be.equal(true);
+    });
+
+    it('Retorna as informações corretas', async () => {
+      await saleController.create(request, response);
+      expect(response.json.calledWith(saleRegistered)).to.be.equal(true);
+    });
+  });
+  describe('Ocorreu um erro inesperado', () => {
+    const request = {};
+    const response = {};
+
+    before(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(saleService, 'create').throws(new Error('Server error'));
+    });
+
+    after(() => {
+      saleService.create.restore();
+    });
+
+    it('Retorna o status 500', async () => {
+      await saleController.create(request, response);
+      expect(response.status.calledWith(500)).to.be.equal(true);
+    });
+
+    it('Retorna a mensagem correta', async () => {
+      await saleController.create(request, response);
+      expect(response.json.calledWith({ message: 'server error' }));
     });
   });
 });
