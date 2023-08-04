@@ -57,7 +57,20 @@ const execute = [
     warningStatus: 0
   },
   undefined
-]
+];
+
+const saleProduct = [
+  {
+    sale_id: 1,
+    product_id: 1,
+    quantity: 1
+  },
+  {
+    sale_id: 1,
+    product_id: 3,
+    quantity: 3
+  }
+];
 
 module.exports = {
   allProductsResponse,
@@ -66,4 +79,5 @@ module.exports = {
   sale,
   saleRegistered,
   execute,
+  saleProduct,
 };
