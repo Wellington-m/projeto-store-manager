@@ -60,33 +60,39 @@ Foi desenvolvido uma API utilizando a arquitetura MSC (model-service-controller)
 
 ##
 
-As rotas disponíveis são:
-### Post
-* Cadastrar uma venda: `http://localhost:3000/sales`
-  - **:warning:** É esperado um array de objetos no body da requisição do tipo:
+<details>
+ <summary><strong>Utilizando a aplicação</strong></summary>
+  As rotas disponíveis são:
+ 
+ ### Post
+ * Cadastrar uma venda: `http://localhost:3000/sales`
+   - **:warning:** É esperado um array de objetos no body da requisição do tipo:
+       ```JSON
+       [
+         {
+           "productId": 1, //ID do produto
+           "quantity":1 //Quantidade vendida
+         },
+        ]
+        ```
+ * Cadastrar um produto: `http://localhost:3000/products/`
+    - **:warning:** É esperado um objeto no body da requisição do tipo:
       ```JSON
-      [
         {
-          "productId": 1, //ID do produto
-          "quantity":1 //Quantidade vendida
-        },
-       ]
+          "name": "produto", //Nome do produto
+        }
        ```
-* Cadastrar um produto: `http://localhost:3000/products/`
-   - **:warning:** É esperado um objeto no body da requisição do tipo:
-     ```JSON
-       {
-         "name": "produto", //Nome do produto
-       }
-      ```
+ 
+ ### Get
+ * Listar todos os produtos: `http://localhost:3000/products/`
+ * Listar todas as vendas: `http://localhost:3000/sales`
+ * Procurar um produto pelo ID: `http://localhost:3000/products/ID`
+ 
+ ### Put
+ * Alterar o nome de um produto pelo ID: `http://localhost:3000/products/ID`
 
-### Get
-* Listar todos os produtos: `http://localhost:3000/products/`
-* Listar todas as vendas: `http://localhost:3000/sales`
-* Procurar um produto pelo ID: `http://localhost:3000/products/ID`
+</details>
 
-### Put
-* Alterar o nome de um produto pelo ID: `http://localhost:3000/products/ID`
 
 
 
