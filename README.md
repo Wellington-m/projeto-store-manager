@@ -61,7 +61,7 @@ Foi desenvolvido uma API utilizando a arquitetura MSC (model-service-controller)
 ##
 
 <details>
- <summary><strong>Utilizando a aplicação</strong></summary>
+ <summary><strong>💥:Utilizando a aplicação</strong></summary>
   As rotas disponíveis são:
  
  ### Post
