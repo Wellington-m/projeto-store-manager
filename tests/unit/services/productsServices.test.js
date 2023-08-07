@@ -3,7 +3,7 @@ const { describe } = require('mocha');
 const sinon = require('sinon');
 const productService = require('../../../services/productService');
 const productModel = require('../../../models/productModel');
-const { allProductsResponse, productById } = require('../dataMock');
+const { allProductsResponse, productById, insertAndUpdateResult } = require('../dataMock');
 
 describe('Busca todos os produtos no banco de dados', () => {
   describe('Não existe nenhum produdo cadastrado', () => {
@@ -83,3 +83,20 @@ describe('Buscar um produto pelo ID', () => {
     });
   });
 });
+
+describe('Registra um produto no banco de dados', () => {
+  before(() => {
+    sinon.stub(productModel, 'create').resolves(insertAndUpdateResult);
+  });
+
+  after(() => {
+    productModel.create.restore();
+  });
+
+  it('Retorna as informações corretas', async () => {
+    const result = await productService.create('teste');
+    expect(result).to.have.property('insertId');
+  });
+});
+
+describe('Atualiza um produto no banco de dados', () => {});

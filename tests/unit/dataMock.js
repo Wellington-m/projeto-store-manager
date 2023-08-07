@@ -72,6 +72,15 @@ const saleProduct = [
   }
 ];
 
+const insertAndUpdateResult = {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 7,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0
+};
+
 module.exports = {
   allProductsResponse,
   productById,
@@ -80,4 +89,5 @@ module.exports = {
   saleRegistered,
   execute,
   saleProduct,
+  insertAndUpdateResult,
 };
