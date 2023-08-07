@@ -68,5 +68,29 @@ describe('Busca uma venda pelo ID', () => {
 });
 
 describe('Registra uma venda', () => {
-  it('Retorna as informações corretamente', () => {});
+  before(() => {
+    sinon.stub(salesModel, 'create').resolves({ insertId: 10 });
+    sinon.stub(salesProductsModel, 'create').resolves();
+  });
+
+  after(() => {
+    salesModel.create.restore();
+    salesProductsModel.create.restore();
+  });
+
+  it('Retorna as informações corretamente', async () => {
+    const products = [
+      {
+        productId: 1,
+        quantity:1
+      },
+      {
+        productId: 3,
+        quantity:3
+      }
+    ];
+    const result = await saleService.create(products);
+    expect(result).to.be.an('object');
+    expect(result).to.include.all.keys('id', 'itemsSold');
+  });
 });
