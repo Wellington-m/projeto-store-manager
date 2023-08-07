@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const saleService = require('../../../services/saleService');
 const salesModel = require('../../../models/salesModel');
 const salesProductsModel = require('../../../models/salesProductsModel');
-const { allSales } = require('../dataMock');
+const { allSales, sale } = require('../dataMock');
 
 describe('Lista todas as vendas', () => {
   describe('Não existe vendas cadastradas', () => {
@@ -37,13 +37,33 @@ describe('Lista todas as vendas', () => {
 
 describe('Busca uma venda pelo ID', () => {
   describe('Não existe vendas cadastradas', () => {
+    before(() => {
+      sinon.stub(salesModel, 'getById').resolves([]);
+    });
 
-    it('Retorna um array vazio', () => {});
+    after(() => { salesModel.getById.restore() });
+
+    it('Retorna um array vazio', async () => {
+      const result = await saleService.getById(1);
+      expect(result).to.be.an('array');
+      expect(result).to.be.empty;
+    });
   });
 
   describe('Existe vendas cadastradas', () => {
+    before(() => {
+      sinon.stub(salesModel, 'getById').resolves([sale]);
+    });
 
-    it('Retorna a venda corretamente', () => {});
+    after(() => {
+      salesModel.getById.restore();
+    });
+
+    it('Retorna a venda corretamente', async () => {
+      const result = await saleService.getById(1);
+      expect(result).to.be.an('array');
+      expect(result).to.deep.equal([sale]);
+    });
   });
 });
 
