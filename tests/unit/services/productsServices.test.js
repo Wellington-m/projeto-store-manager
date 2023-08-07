@@ -3,7 +3,7 @@ const { describe } = require('mocha');
 const sinon = require('sinon');
 const productService = require('../../../services/productService');
 const productModel = require('../../../models/productModel');
-const { allProductsResponse, productById, insertAndUpdateResult } = require('../dataMock');
+const { allProductsResponse, productById, insertResult, updateResult } = require('../dataMock');
 
 describe('Busca todos os produtos no banco de dados', () => {
   describe('Não existe nenhum produdo cadastrado', () => {
@@ -86,7 +86,7 @@ describe('Buscar um produto pelo ID', () => {
 
 describe('Registra um produto no banco de dados', () => {
   before(() => {
-    sinon.stub(productModel, 'create').resolves(insertAndUpdateResult);
+    sinon.stub(productModel, 'create').resolves(insertResult);
   });
 
   after(() => {
@@ -99,4 +99,34 @@ describe('Registra um produto no banco de dados', () => {
   });
 });
 
-describe('Atualiza um produto no banco de dados', () => {});
+describe('Atualiza um produto no banco de dados', () => {
+  describe('Produto é atualizado com sucesso', () => {
+    before(() => {
+      sinon.stub(productModel, 'update').resolves(updateResult);
+    });
+
+    after(() => {
+      productModel.update.restore();
+    });
+
+    it('Retorna as informações corretas', async () => {
+      const result = await productService.update('teste', 1);
+      expect(result).to.be.true;
+    });
+  });
+
+  describe('Produto não é atualizado', () => {
+    before(() => {
+      sinon.stub(productModel, 'update').resolves({ ...updateResult, affectedRows: 0 });
+    });
+
+    after(() => {
+      productModel.update.restore();
+    });
+
+    it('Retorna false', async () => {
+      const result = await productService.update('teste', 1);
+      expect(result).to.be.false;
+    });
+  });
+});

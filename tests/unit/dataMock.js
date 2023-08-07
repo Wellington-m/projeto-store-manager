@@ -72,13 +72,23 @@ const saleProduct = [
   }
 ];
 
-const insertAndUpdateResult = {
+const insertResult = {
   fieldCount: 0,
   affectedRows: 1,
   insertId: 7,
   info: '',
   serverStatus: 2,
   warningStatus: 0
+};
+
+const updateResult = {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 0,
+  info: 'Rows matched: 1  Changed: 1  Warnings: 0',
+  serverStatus: 2,
+  warningStatus: 0,
+  changedRows: 1
 };
 
 module.exports = {
@@ -89,5 +99,6 @@ module.exports = {
   saleRegistered,
   execute,
   saleProduct,
-  insertAndUpdateResult,
+  insertResult,
+  updateResult,
 };
