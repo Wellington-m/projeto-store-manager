@@ -5,7 +5,7 @@
 Foi desenvolvido uma API utilizando a arquitetura MSC (model-service-controller) e interface RESTful. A API é um sistema de gerenciamento de vendas no formato dropshipping em que será possível criar, visualizar, deletar e atualizar produtos e vendas.
 
 
-## Nesse projeto, foi utilizado:
+## Tecnologias utilizadas:
 
   * Node.js com Express
   * Joi para validações
