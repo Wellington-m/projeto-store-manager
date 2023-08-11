@@ -23,7 +23,7 @@ Foi desenvolvido uma API utilizando a arquitetura MSC (model-service-controller)
  
   **:warning: Antes de começar, seu docker-compose precisa estar na versão 1.29 ou superior. [Veja aqui]     (https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-pt) ou [na documentação]     (https://docs.docker.com/compose/install/) como instalá-lo. No primeiro artigo, você pode substituir onde está com `1.26.0` por `1.29.2`.**
  
- > :information_source: Clone o projeto com o comando `git clone ***`.
+ > :information_source: Clone o projeto com o comando `git clone git@github.com:Wellington-m/projeto-store-manager.git`.
  
  > :information_source: Entre na pasta `cd projeto-store-manager`.
  
